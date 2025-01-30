@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import CreateUser from "../../compnents/Superadmin/CreateUser";
 import UpdateUser from "../../compnents/Superadmin/UpdateUser";
 import DeleteModal from "../../compnents/Superadmin/DeleteModal";
@@ -12,20 +12,25 @@ import { resetUserStatus } from "../../redux/slices/SuperAdminUserSlice/addUserS
 import { deleteUserStatus } from "../../redux/slices/SuperAdminUserSlice/deleteUserSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import ChangePasswordModal from "../../compnents/Superadmin/ChangePasswordModal";
+import { MdDelete,MdEdit } from "react-icons/md";
+import { FaUnlock } from "react-icons/fa6";
+
 
 const DashboardScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [updateOpen, setUpdateOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const {data} = useSelector((state) => state.allUser)
-  const updateStatus = useSelector((state) => state.updateUser.status)
-  const createUserStatus = useSelector((state) => state.addUser.status)
-  const deleteUserStatus = useSelector((state) => state.deleteUser.status)
-  const user = data?.data
+  const [passwordModalOpen, setPasswordModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const { data } = useSelector((state) => state.allUser);
+  const updateStatus = useSelector((state) => state.updateUser.status);
+  const createUserStatus = useSelector((state) => state.addUser.status);
+  const deleteUserStatus = useSelector((state) => state.deleteUser.status);
+  const user = data?.data;
   const openModalHandler = () => {
     setIsOpen(true);
   };
@@ -50,6 +55,16 @@ const DashboardScreen = () => {
 
   const closeDeleteModalHandler = () => {
     setDeleteOpen(false);
+  };
+
+  const handleOpenPasswordModal = (userId) => {
+    setSelectedUserId(userId);
+    setPasswordModalOpen(true);
+  };
+
+  const handleClosePasswordModal = () => {
+    setPasswordModalOpen(false);
+    setSelectedUserId(null);
   };
 
   const filteredData =
@@ -153,30 +168,50 @@ const DashboardScreen = () => {
     {
       field: "actions",
       headerName: "ACTION",
-      minWidth: 200,
+      minWidth: 250,
       flex: 1,
 
       renderCell: (params) => (
-        <div className="flex flex-row gap-4">
-          <div
-            className="bg-[#644AFF] p-1 rounded-sm flex items-center justify-center text-white cursor-pointer  hover:bg-[#422eb6] "
-            onClick={() => {
-              updateModalHandler(params.row);
+        <div className="flex flex-row gap-2 items-center">
+          {/* Change Password Button */}
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<FaUnlock />}
+            onClick={() => handleOpenPasswordModal(params.row.id)}
+            className="capitalize"
+          >
+            Change
+          </Button>
+
+          {/* Edit Button with Fix */}
+          <IconButton
+            onClick={() => updateModalHandler(params.row)}
+            size="small"
+            sx={{
+              backgroundColor: "#644AFF",
+              color: "white",
+              "&:hover": { backgroundColor: "#422eb6" },
             }}
           >
-            UPDATE
-          </div>
-          <div
-            className="bg-[#F13434] p-1 rounded-sm flex items-center justify-center text-white cursor-pointer  hover:bg-[#d22727]  "
-            onClick={() => {
-              deleteModalHandler(params.row.id);
+            <MdEdit />
+          </IconButton>
+
+          {/* Delete Button with Fix */}
+          <IconButton
+            onClick={() => deleteModalHandler(params.row.id)}
+            size="small"
+            sx={{
+              backgroundColor: "#F13434",
+              color: "white",
+              "&:hover": { backgroundColor: "#d22727" },
             }}
           >
-            DELETE
-          </div>
+            <MdDelete />
+          </IconButton>
         </div>
       ),
-    },
+    }
   ];
 
   useEffect(() => {
@@ -213,11 +248,10 @@ const DashboardScreen = () => {
 
     setTimeout(() => {
       dispatch(resetStatus());
-      dispatch(resetUserStatus())
-      dispatch(deleteUserStatus())
+      dispatch(resetUserStatus());
+      dispatch(deleteUserStatus());
     }, 1000);
   }, [updateStatus, dispatch, createUserStatus, deleteUserStatus]);
-
 
   return (
     <>
@@ -236,6 +270,15 @@ const DashboardScreen = () => {
           selectedData={selectedData}
         />
       )}
+
+      {passwordModalOpen && (
+        <ChangePasswordModal
+          isOpen={passwordModalOpen}
+          onClose={handleClosePasswordModal}
+          userId={selectedUserId}
+        />
+      )}
+
       <div className="relative tablet:mx-[20px] py-0 mt-10 px-5 tablet:px-0 w-full h-full overflow-x-hidden">
         <div className="flex flex-col p-4 bg-white rounded-lg shadow-md border-[1px] mt-7 h-[90vh]">
           <div className="flex tablet:flex-row flex-col gap-4 tablet:gap-0 w-full justify-between mb-4 ">

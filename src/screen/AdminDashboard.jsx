@@ -149,9 +149,9 @@ const AdminDashboard = () => {
         <div className="flex justify-start gap-4 max-w-full"></div>
       </section>
       <section className=" container w-full mx-auto min-h-screen px-4">
-        <div className="flex flex-wrap gap-2 mb-10 md:justify-between max-w-[800px]">
+        <div className="flex flex-wrap gap-2 mb-10 max-w-[1200px]">
           <button
-            className="px-7 py-2 bg-primary border border-black text-white font-bold  rounded-xl  duration-100 ease-in"
+            className="px-8 py-3 bg-primary border border-black text-white font-bold rounded-xl duration-150 ease-in"
             onClick={openEvaluation}
           >
             Evaluate
@@ -159,24 +159,34 @@ const AdminDashboard = () => {
           {role === "Principal" && (
             <>
               <button
-                className="px-7 py-2 bg-tertiary text-black border border-black font-bold  rounded-xl  duration-100 ease-in"
+                className="px-8 py-3 bg-tertiary text-black border border-black font-bold rounded-xl duration-150 ease-in"
                 onClick={openModal}
                 disabled
               >
                 Office Services
               </button>
-              <button className="px-7 py-2  bg-red-600 border border-black text-white font-bold  rounded-xl  duration-100 ease-in" disabled>
+              <button
+                className="px-8 py-3 bg-red-600 border border-black text-white font-bold rounded-xl duration-150 ease-in"
+                disabled
+              >
                 Classroom Observation
               </button>
               <button
-                className="px-7 py-2 bg-gray-600 text-white border border-black font-bold  rounded-xl  duration-100 ease-in"
+                className="px-8 py-3 bg-gray-600 text-white border border-black font-bold rounded-xl duration-150 ease-in"
                 onClick={openQuestionModal}
               >
                 Questions
               </button>
+              <button
+                className="px-8 py-3 bg-green-600 text-white border border-black font-bold rounded-xl duration-150 ease-in"
+                onClick={()=>{ navigate("/evaluation-result")}}
+              >
+                Evalution Results
+              </button>
             </>
           )}
         </div>
+
         {/* Card holder for total evaluated */}
         <div className="flex flex-wrap justify-around lg:justify-start gap-10">
           <CardHolder
@@ -221,7 +231,9 @@ const AdminDashboard = () => {
               </div>
             </div>
             <FormControl fullWidth size="small">
-              <InputLabel id="demo-simple-select-label">Master List Type</InputLabel>
+              <InputLabel id="demo-simple-select-label">
+                Master List Type
+              </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -230,14 +242,8 @@ const AdminDashboard = () => {
                 label="Master List Type"
                 onChange={handleFormType}
               >
-               
-                <MenuItem value="Teacher">
-                  Teacher
-                </MenuItem>
-                 <MenuItem value="Admin">
-                  Admin
-                </MenuItem>
-               
+                <MenuItem value="Teacher">Teacher</MenuItem>
+                <MenuItem value="Admin">Admin</MenuItem>
               </Select>
             </FormControl>
             <div className="max-h-[100vh]">
@@ -245,7 +251,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row lg:flex-col md:justify-evenly lg:justify-start  gap-10">
+          <div className="flex flex-col md:flex-row lg:flex-col md:justify-evenly lg:justify-start  gap-10 md:max-w-[25%] w-full">
             <div className="shadow-md  shadow-primary drop-shadow-xl min-w-[300px] min-h-[400px] md:min-h-screen lg:min-h-[400px] lg:max-h-[400px] overflow-auto bg-white  rounded-lg p-4">
               <h1 className="text-center font-bold">Comments</h1>
               {approvedCommentsData["Comments & Suggestion Approved"]?.length <=

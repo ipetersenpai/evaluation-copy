@@ -14,7 +14,7 @@ const SessionScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.sessions);
-  const sessionStatus = useSelector((state) => state.addSessions.status)
+  const sessionStatus = useSelector((state) => state.addSessions.status);
 
   const sessionData = data?.data;
   const openModalHandler = () => {
@@ -87,7 +87,6 @@ const SessionScreen = () => {
     }, 1000);
   }, [sessionStatus, dispatch]);
 
-
   return (
     <>
       {isOpen && (
@@ -96,6 +95,25 @@ const SessionScreen = () => {
 
       <div className="relative tablet:mx-[20px] py-0 mt-10 px-5 tablet:px-0 w-full h-full overflow-x-hidden">
         <div className="flex flex-col p-4 bg-white rounded-lg shadow-md border-[1px] mt-7 h-[90vh]">
+          <span className="flex items-center bg-blue-100 text-blue-800 border border-blue-300 rounded-md p-3 text-sm font-medium mb-4">
+            <svg
+              className="w-5 h-5 text-blue-600 mr-2"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 16h-1v-4h-1m1-4h.01M12 22a10 10 0 100-20 10 10 0 000 20z"
+              />
+            </svg>
+            Every year, the evaluation consists of two sessions: the midyear
+            evaluation (01) and the end-year evaluation (02).
+          </span>
+
           <div className="flex tablet:flex-row flex-col gap-4 tablet:gap-0 w-full justify-between mb-4 ">
             <div className="tablet:mt-0 w-full">
               {/* <FiSearch

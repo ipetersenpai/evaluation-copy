@@ -19,6 +19,7 @@ const SessionScreen = lazy(() => import("../screen/Superadmin/SessionScreen"));
 const QuestionScreen = lazy(() =>
   import("../screen/Superadmin/QuestionScreen")
 );
+import EvaluationReportScreen from "../screen/EvaluationReport";
 
 const Protected = ({ role }) => {
   return (
@@ -35,7 +36,6 @@ const Protected = ({ role }) => {
             <Route path="/" element={<TeacherDashboard />} />
             <Route path="/evaluation-form/:type" element={<EvaluationForm />} />
             <Route path="/Settings" element={<Settings />} />
-
           </>
         )}
 
@@ -89,6 +89,7 @@ const Protected = ({ role }) => {
             <Route path="/evaluation-type" element={<SelectEvaluationType />} />
             <Route path="/evaluation-form/:type" element={<EvaluationForm />} />
             <Route path="/Settings" element={<Settings />} />
+            <Route path="/evaluation-result" element={<EvaluationReportScreen />} />
           </>
         )}
         {role === "Student" && (
@@ -104,11 +105,12 @@ const Protected = ({ role }) => {
           <>
             <Route path="/" element={<ApproveComments />} />
             <Route path="/Settings" element={<Settings />} />
-
           </>
         )}
 
         <Route path="*" element={<NotFoundLandingPage />} />
+
+
       </Routes>
     </Suspense>
   );

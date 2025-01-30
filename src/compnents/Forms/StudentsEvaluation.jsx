@@ -100,7 +100,7 @@ const StudentsEvaluation = () => {
       questions: questionRatings,
     };
     console.log(values);
-    // dispatch(evaluate(values));
+    dispatch(evaluate(values));
   };
 
   useEffect(() => {

@@ -1,10 +1,13 @@
 import React, { useEffect, useMemo, useCallback } from "react";
 import Box from "@mui/material/Box";
+import { FaFileExcel } from "react-icons/fa";
+import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingAnimation from "./LoadingAnimation";
 import { getMasterList } from "../redux/slices/MasterList/masterListSlice";
 import Tooltip from "@mui/material/Tooltip";
+import * as XLSX from "xlsx";
 
 const AdminMasterListTable = React.memo(() => {
   const dispatch = useDispatch();
@@ -12,10 +15,22 @@ const AdminMasterListTable = React.memo(() => {
   // Selectors
   const masterlistData = useSelector((state) => state.masterlist.data.data);
   const masterlistStatus = useSelector((state) => state.masterlist.status);
-    console.log(masterlistData)
+  console.log(masterlistData);
   useEffect(() => {
     dispatch(getMasterList());
   }, [dispatch]);
+
+  const exportToExcel = () => {
+    // Create a worksheet from rows
+    const worksheet = XLSX.utils.json_to_sheet(rowsAndColumns.rows);
+
+    // Create a new workbook and append the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+
+    // Export the workbook to a file
+    XLSX.writeFile(workbook, "admin_master_list_record.xlsx");
+  };
 
   // Memoized function to prepare rows and columns for DataGrid
   const rowsAndColumns = useMemo(() => {
@@ -96,6 +111,23 @@ const AdminMasterListTable = React.memo(() => {
     <div>
       <div className="flex flex-col justify-between md:flex-row mb-4 md:mb-0">
         <h1 className="my-2 font-bold text-2xl">Admin Master List</h1>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={exportToExcel}
+          style={{
+            marginBottom: "5px",
+            fontSize: "12px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "5px",
+            padding: "5px 10px",
+          }}
+        >
+          <FaFileExcel />
+          Export to Excel
+        </Button>
       </div>
       <div className="border-2 border-black"></div>
       <Box

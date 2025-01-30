@@ -3,33 +3,43 @@ import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { createSession, resetSessionStatus } from "../../redux/slices/SessionSlice/createSessionsSlice";
+import { IoMdClose } from "react-icons/io";
+import {
+  createSession,
+  resetSessionStatus,
+} from "../../redux/slices/SessionSlice/createSessionsSlice";
 const CreateSession = ({ isOpen, closeModal }) => {
-  const dispatch = useDispatch()
-  const {status} = useSelector((state) => state.addSessions)
+  const dispatch = useDispatch();
+  const { status } = useSelector((state) => state.addSessions);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
 
   const onSubmitHandler = (data) => {
-    dispatch(createSession(data))
+    const confirmation = window.confirm(
+      "Are you sure you want to create a new session? All the evaluated data for this current session will be stored in the archives."
+    );
+
+    if (confirmation) {
+      dispatch(createSession(data));
+    }
   };
 
+
   useEffect(() => {
-    if(status === "success"){
-      reset()
-      closeModal()
+    if (status === "success") {
+      reset();
+      closeModal();
     }
 
     setTimeout(() => {
-      dispatch(resetSessionStatus())
-    }, 1000)
-
-  }, [dispatch, status])
+      dispatch(resetSessionStatus());
+    }, 1000);
+  }, [dispatch, status]);
   return (
     <>
       {isOpen && (
@@ -54,7 +64,7 @@ const CreateSession = ({ isOpen, closeModal }) => {
                   >
                     CREATE SESSION
                   </h5>
-                  <button onClick={closeModal}>close</button>
+                  <button onClick={closeModal}><IoMdClose /></button>
                 </div>
 
                 <div className="flex flex-col w-full mt-5">
@@ -69,6 +79,10 @@ const CreateSession = ({ isOpen, closeModal }) => {
                       error={errors.school_year ? true : false}
                       {...register("school_year", {
                         required: "This is required",
+                        pattern: {
+                          value: /^\d{4}-\d{4}-\d{2}$/, // Matches "2024-2025-01" format
+                          message: "Invalid format. Use YYYY-YYYY-MM.", // Error message for invalid format
+                        },
                       })}
                     />
                     {errors.school_year && (
@@ -76,6 +90,7 @@ const CreateSession = ({ isOpen, closeModal }) => {
                         {errors.school_year.message}
                       </p>
                     )}
+
                     <div className="modal-footer mt-4 flex justify-end gap-1">
                       <Button variant="outlined" onClick={closeModal}>
                         CLOSE

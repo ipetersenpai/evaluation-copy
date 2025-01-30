@@ -151,7 +151,7 @@ const QuestionScreen = ({ closeModal }) => {
           closeModal={handleCloseUpdateModal}
         />
       )}
-      <div className="fixed  py-0  px-5 tablet:px-0 min-h-screen max-h-screen w-full overflow-hidden backdrop-brightness-75">
+      <div className="fixed  py-0  px-5 tablet:px-0 min-h-screen max-h-screen w-full overflow-hidden backdrop-brightness-75 z-10">
         <div className="flex flex-col p-4 bg-white rounded-lg shadow-md border-[1px] mt-7 h-[90vh]">
           <img
             src={close}

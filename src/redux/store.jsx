@@ -34,6 +34,9 @@ import pieChartReducer from "./slices/Charts/pieChartSlice";
 import BarchartReducer from "./slices/Charts/BarchartSlice";
 import masterListReducer from "./slices/MasterList/masterListSlice";
 import masterListSliceTeacherReducer from "./slices/MasterList/masterListSliceTeacher";
+import getResultReducer from "./slices/resultsSlice/getResultSlice";
+import changeUserPasswordReducer from "./slices/authSlice/changeUserPasswordSlice";
+
 
 const store = configureStore({
   reducer: {
@@ -71,6 +74,8 @@ const store = configureStore({
     masterlistTeacher: masterListSliceTeacherReducer,
     pieChart : pieChartReducer,
     barChart : BarchartReducer,
+    getResult: getResultReducer,
+    updateUserPassword: changeUserPasswordReducer,
   },
 });
 

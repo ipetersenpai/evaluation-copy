@@ -13,9 +13,9 @@ const UpdateUser = ({ isOpen, closeModal, selectedData }) => {
   const [selectedEmailStatus, setSelectedEmailStatus] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const {status} = useSelector((state) => state.updateUser)
+  const { status } = useSelector((state) => state.updateUser);
 
   const {
     register,
@@ -25,10 +25,8 @@ const UpdateUser = ({ isOpen, closeModal, selectedData }) => {
     formState: { errors },
   } = useForm();
 
-
   const onSubmitHandler = (data) => {
-
-    dispatch(updateUser({value: data, id: selectedData?.id}))
+    dispatch(updateUser({ value: data, id: selectedData?.id }));
   };
 
   useEffect(() => {
@@ -316,7 +314,7 @@ const UpdateUser = ({ isOpen, closeModal, selectedData }) => {
                       </div>
                     )}
 
-<TextField
+                    <TextField
                       fullWidth
                       select
                       sx={{
@@ -362,7 +360,6 @@ const UpdateUser = ({ isOpen, closeModal, selectedData }) => {
                       </MenuItem>
                     </TextField>
 
-
                     <div className="modal-footer mt-4 flex justify-end gap-1">
                       <Button variant="outlined" onClick={closeModal}>
                         CLOSE
@@ -386,7 +383,7 @@ const UpdateUser = ({ isOpen, closeModal, selectedData }) => {
                               ? setSelectedEmailStatus(true)
                               : setSelectedEmailStatus(false);
 
-                              watch("status") === ""
+                            watch("status") === ""
                               ? setSelectedStatus(true)
                               : watch("status") === undefined
                               ? setSelectedStatus(true)

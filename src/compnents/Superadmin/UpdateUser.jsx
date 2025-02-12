@@ -11,11 +11,12 @@ import { resetStatus } from "../../redux/slices/SuperAdminUserSlice/updateUserSl
 const UpdateUser = ({ isOpen, closeModal, selectedData }) => {
   const [selectedRole, setSelectedRole] = useState(false);
   const [selectedEmailStatus, setSelectedEmailStatus] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch()
-  
+
   const {status} = useSelector((state) => state.updateUser)
- 
+
   const {
     register,
     handleSubmit,
@@ -26,6 +27,7 @@ const UpdateUser = ({ isOpen, closeModal, selectedData }) => {
 
 
   const onSubmitHandler = (data) => {
+
     dispatch(updateUser({value: data, id: selectedData?.id}))
   };
 
@@ -313,6 +315,54 @@ const UpdateUser = ({ isOpen, closeModal, selectedData }) => {
                         <p>ERROR: {errorMessage}</p>
                       </div>
                     )}
+
+<TextField
+                      fullWidth
+                      select
+                      sx={{
+                        marginBottom: "15px",
+                      }}
+                      label="Status"
+                      name="status"
+                      defaultValue={selectedData.status}
+                      {...register("status", {
+                        required: "This is required",
+                      })}
+                      SelectProps={{
+                        MenuProps: {
+                          disableScrollLock: true,
+                        },
+                      }}
+                    >
+                      <MenuItem value="" disabled>
+                        <p
+                          className="text-slate-500 text-[12px]"
+                          onClick={() => {
+                            setSelectedStatus(true);
+                          }}
+                        >
+                          Select one
+                        </p>
+                      </MenuItem>
+                      <MenuItem
+                        value="1"
+                        onClick={() => {
+                          setSelectedStatus(false);
+                        }}
+                      >
+                        ACTIVE
+                      </MenuItem>
+                      <MenuItem
+                        value="0"
+                        onClick={() => {
+                          setSelectedStatus(false);
+                        }}
+                      >
+                        INACTIVE
+                      </MenuItem>
+                    </TextField>
+
+
                     <div className="modal-footer mt-4 flex justify-end gap-1">
                       <Button variant="outlined" onClick={closeModal}>
                         CLOSE
@@ -335,6 +385,12 @@ const UpdateUser = ({ isOpen, closeModal, selectedData }) => {
                               : watch("email_status") === undefined
                               ? setSelectedEmailStatus(true)
                               : setSelectedEmailStatus(false);
+
+                              watch("status") === ""
+                              ? setSelectedStatus(true)
+                              : watch("status") === undefined
+                              ? setSelectedStatus(true)
+                              : setSelectedStatus(false);
                           }
                         }}
                       >

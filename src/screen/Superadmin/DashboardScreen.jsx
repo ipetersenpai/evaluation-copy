@@ -13,9 +13,8 @@ import { deleteUserStatus } from "../../redux/slices/SuperAdminUserSlice/deleteU
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import ChangePasswordModal from "../../compnents/Superadmin/ChangePasswordModal";
-import { MdDelete,MdEdit } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
 import { FaUnlock } from "react-icons/fa6";
-
 
 const DashboardScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -114,11 +113,13 @@ const DashboardScreen = () => {
       headerName: "EMAIL STATUS",
       flex: 1,
       minWidth: 150,
+      headerAlign: "center",
+      align: "center",
       renderCell: ({ row: { email_status } }) => {
         return (
           <div className="">
-            {email_status === 1 && <p>TRUE</p>}
-            {email_status === 0 && <p>FALSE</p>}
+            {email_status === 1 && <p className="font-bold text-[12px] text-green-500">TRUE</p>}
+            {email_status === 0 && <p className="font-bold text-[12px] text-red-500">FALSE</p>}
           </div>
         );
       },
@@ -153,10 +154,39 @@ const DashboardScreen = () => {
       },
     },
     {
+      field: "status",
+      headerName: "STATUS",
+      flex: 1,
+      minWidth: 120,
+      headerAlign: "center",
+      align: "center",
+      renderCell: ({ row: { status } }) => {
+        return (
+          <div>
+            {status === 1 ? (
+              <div className=" flex flex-center justify-center p-[1px]">
+                <p className="font-bold text-[12px] text-green-500">ACTIVE</p>
+              </div>
+            ) : (
+              <p className="font-bold text-[12px] text-red-500">INACTIVE</p>
+            )}
+          </div>
+        );
+      },
+    },
+    {
       field: "created_at",
       headerName: "DATE CREATED",
       flex: 1,
       minWidth: 250,
+      renderCell: ({ row: { created_at } }) => {
+        const formattedDate = new Date(created_at).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+        return <span>{formattedDate}</span>;
+      },
     },
 
     {
@@ -164,7 +194,16 @@ const DashboardScreen = () => {
       headerName: "DATE LAST UPDATED",
       flex: 1,
       minWidth: 250,
+      renderCell: ({ row: { updated_at } }) => {
+        const formattedDate = new Date(updated_at).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+        return <span>{formattedDate}</span>;
+      },
     },
+
     {
       field: "actions",
       headerName: "ACTION",
@@ -211,7 +250,7 @@ const DashboardScreen = () => {
           </IconButton>
         </div>
       ),
-    }
+    },
   ];
 
   useEffect(() => {

@@ -47,12 +47,14 @@ const SessionScreen = () => {
       field: "session_status",
       headerName: "SESSION STATUS",
       flex: 1,
-      minWidth: 150,
+      minWidth: 110,
+      headerAlign: "center",
+      align: "center",
       renderCell: ({ row: { session_status } }) => {
         return (
           <div className="">
-            {session_status === 1 && <p>TRUE</p>}
-            {session_status === 0 && <p>FALSE</p>}
+            {session_status === 1 &&  <p className="font-bold text-[12px] text-green-500">ACTIVE</p>}
+            {session_status === 0 && <p className="font-bold text-[12px] text-red-500">INACTIVE</p>}
           </div>
         );
       },
@@ -62,6 +64,14 @@ const SessionScreen = () => {
       headerName: "DATE CREATED",
       flex: 1,
       minWidth: 250,
+      renderCell: ({ row: { created_at } }) => {
+        const formattedDate = new Date(created_at).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+        return <span>{formattedDate}</span>;
+      },
     },
 
     {
@@ -69,6 +79,14 @@ const SessionScreen = () => {
       headerName: "DATE LAST UPDATED",
       flex: 1,
       minWidth: 250,
+      renderCell: ({ row: { updated_at } }) => {
+        const formattedDate = new Date(updated_at).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+        return <span>{formattedDate}</span>;
+      },
     },
   ];
 

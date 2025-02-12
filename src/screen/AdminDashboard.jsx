@@ -181,7 +181,7 @@ const AdminDashboard = () => {
                 className="px-8 py-3 bg-green-600 text-white border border-black font-bold rounded-xl duration-150 ease-in"
                 onClick={()=>{ navigate("/evaluation-result")}}
               >
-                Evalution Results
+                 Evaluation Results
               </button>
             </>
           )}

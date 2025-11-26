@@ -20,7 +20,9 @@ const QuestionScreen = lazy(() =>
   import("../screen/Superadmin/QuestionScreen")
 );
 import EvaluationReportScreen from "../screen/EvaluationReport";
-
+const NotYetEvaluatedScreen = lazy(() =>
+  import("../screen/Superadmin/NotYetEvaluatedScreen")
+);
 const Protected = ({ role }) => {
   return (
     <Suspense
@@ -90,6 +92,7 @@ const Protected = ({ role }) => {
             <Route path="/evaluation-form/:type" element={<EvaluationForm />} />
             <Route path="/Settings" element={<Settings />} />
             <Route path="/evaluation-result" element={<EvaluationReportScreen />} />
+            <Route path="/not-yet-evaluated" element={<NotYetEvaluatedScreen />} />
           </>
         )}
         {role === "Student" && (

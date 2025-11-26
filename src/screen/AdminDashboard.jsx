@@ -183,6 +183,12 @@ const AdminDashboard = () => {
               >
                  Evaluation Results
               </button>
+              <button
+                className="px-8 py-3 bg-orange-400 text-white border border-black font-bold rounded-xl duration-150 ease-in"
+                onClick={()=>{ navigate("/not-yet-evaluated")}}
+              >
+              Not Yet Evaluated
+              </button>
             </>
           )}
         </div>

@@ -36,7 +36,7 @@ import masterListReducer from "./slices/MasterList/masterListSlice";
 import masterListSliceTeacherReducer from "./slices/MasterList/masterListSliceTeacher";
 import getResultReducer from "./slices/resultsSlice/getResultSlice";
 import changeUserPasswordReducer from "./slices/authSlice/changeUserPasswordSlice";
-
+import notYetEvaluatedV2Reducer from "./slices/evaluationSlice/notYetEvaluatedSliceV2"
 
 const store = configureStore({
   reducer: {
@@ -76,6 +76,7 @@ const store = configureStore({
     barChart : BarchartReducer,
     getResult: getResultReducer,
     updateUserPassword: changeUserPasswordReducer,
+    notYetEvaluatedV2: notYetEvaluatedV2Reducer
   },
 });
 

@@ -395,7 +395,7 @@ const NotYetEvaluatedScreen = () => {
                               </svg>
                               <span className="font-semibold">Pending:</span>
                               <span className="text-orange-600 font-bold">
-                                {item.to_be_evaluated_count || 0}
+                                {item.to_be_evaluated_count - item.evaluation_count  || 0}
                               </span>
                             </div>
                           </div>
